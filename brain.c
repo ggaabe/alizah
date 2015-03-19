@@ -31,7 +31,7 @@ This can be parallelized by splitting up the core array of neurons amongst n pro
 #define threshold 2 // How much energy this neuron needs before it will fire. When it fires, just decrement accum by threshold. Do so (efficiently!) within a single timestep until accum<threshold.
 #define timestamp 3 // Timestamp from the last time this neuron fired. This is used to determine the time between fires
 
-unsigned int table[numNeurons<<logNumFields]; // THIS IS THE BRAIN. Neurons are implicity stored here as a list of (here) 4 attributes: accum, power, threshold, and lastFired
+unsigned int table[numNeurons<<logNumFields]; // THIS IS THE BRAIN. Neurons are implicitly stored here as a list of (here) 4 attributes: accum, power, threshold, and lastFired
 
 int main(){
 	printf("entered main\n");
@@ -53,7 +53,7 @@ int main(){
 
 	unsigned int cTime=0; // keep track of the current timestep to timestap neuron firings
 	while(1){ // THIS IS THE SECRET TO IMMORTALITY! MWAHAHAHA
-		printf("cTime: %d\n",cTime);
+		printf("cTime: %u\n",cTime);
 		// in each timestep, we loop through each neuron in our array with the following:
 		unsigned int *currN=table+((numNeurons-1)<<logNumFields); // we start at the last neuron and loop backwards. The bitshift multiplies our address by 4, which is the number of fields per neuron
 		while(currN>=table){ // for each neuron
@@ -61,7 +61,7 @@ int main(){
 			unsigned int *cAccum=currN; // grab its accum
 			unsigned int *cThresh=currN+threshold; // and its threshold
 			if((*cAccum)>(*cThresh)){ // if it's over its threshold
-				printf("firing %d!\n",currN);
+				printf("firing %u!\n",*currN);
 				// calculate delay and reset timestamp
 				unsigned int *cTimestamp=cAccum+timestamp;
 				unsigned int tDiff=cTime-*cTimestamp; // density should decrease with longer delays
