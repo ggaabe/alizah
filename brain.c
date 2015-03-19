@@ -32,6 +32,7 @@ This can be parallelized by splitting up the core array of neurons amongst n pro
 #define timestamp 3 // Timestamp from the last time this neuron fired. This is used to determine the time between fires
 
 unsigned int table[numNeurons<<logNumFields]; // THIS IS THE BRAIN. Neurons are implicitly stored here as a list of (here) 4 attributes: accum, power, threshold, and lastFired
+//unsigned int table[numNeurons]
 
 int main(){
 	printf("entered main\n");
@@ -55,6 +56,7 @@ int main(){
 	while(1){ // THIS IS THE SECRET TO IMMORTALITY! MWAHAHAHA
 		printf("cTime: %u\n",cTime);
 		// in each timestep, we loop through each neuron in our array with the following:
+        
 		unsigned int *currN=table+((numNeurons-1)<<logNumFields); // we start at the last neuron and loop backwards. The bitshift multiplies our address by 4, which is the number of fields per neuron
 		while(currN>=table){ // for each neuron
 
@@ -81,6 +83,7 @@ int main(){
 				(*cAccum)=0; // reset its accum to zero.
 			}
 			currN-=numFields;
+            //currN--;
 		}
 		cTime++;
 	}
